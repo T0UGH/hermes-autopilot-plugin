@@ -1,0 +1,8 @@
+name: autopilot
+version: 0.1.0
+description: "Mechanical turn chaining for Feishu via lark-cli using `autopilot N`."
+hooks:
+  - pre_llm_call
+  - on_session_end
+  - on_session_finalize
+  - on_session_reset
