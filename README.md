@@ -53,7 +53,7 @@ The continuation message is sent through `lark-cli` to the **current Feishu chat
 ### Default send path
 
 ```bash
-lark-cli im +messages-send --chat-id <current_chat_id> --text <continue_message> --as user
+lark-cli im +messages-send --chat-id <current_chat_id> --text <continue_message>
 ```
 
 Default continuation message:
@@ -69,7 +69,7 @@ Default continuation message:
 - Hermes with user plugin support
 - Feishu session context available to Hermes
 - `lark-cli` installed and usable in the current environment
-- A working Feishu send path with `--as user` if you want the gateway to treat the message as a user-originated follow-up
+- A working Feishu send path. If you deliberately need user-originated follow-ups, set `HERMES_AUTOPILOT_LARK_AS=user` explicitly.
 
 ### Installation
 
@@ -119,7 +119,7 @@ Optional overrides:
 
 - `HERMES_AUTOPILOT_LARK_CLI` — override the `lark-cli` executable path
 - `HERMES_AUTOPILOT_LARK_PROFILE` — pass a specific `lark-cli` profile
-- `HERMES_AUTOPILOT_LARK_AS` — override sender identity (`user` by default)
+- `HERMES_AUTOPILOT_LARK_AS` — optional sender identity passed as `--as <value>`; unset by default
 
 ### Repository layout
 
@@ -200,7 +200,7 @@ You can clear the per-session state files under:
 ### 默认发送方式
 
 ```bash
-lark-cli im +messages-send --chat-id <current_chat_id> --text <continue_message> --as user
+lark-cli im +messages-send --chat-id <current_chat_id> --text <continue_message>
 ```
 
 默认续跑消息内容：
@@ -216,7 +216,7 @@ lark-cli im +messages-send --chat-id <current_chat_id> --text <continue_message>
 - Hermes 已支持 user plugin
 - 当前会话运行在 Feishu 上，并且 Hermes 能拿到会话上下文
 - 当前环境里可用 `lark-cli`
-- 如果你希望 gateway 把它当作用户跟进消息继续处理，最好走 `--as user`
+- 如果你明确希望 gateway 把它当作用户跟进消息继续处理，需要显式设置 `HERMES_AUTOPILOT_LARK_AS=user`
 
 ### 安装方式
 
@@ -266,7 +266,7 @@ autopilot cancel
 
 - `HERMES_AUTOPILOT_LARK_CLI` — 自定义 `lark-cli` 可执行文件路径
 - `HERMES_AUTOPILOT_LARK_PROFILE` — 指定 `lark-cli` profile
-- `HERMES_AUTOPILOT_LARK_AS` — 覆盖发送身份，默认是 `user`
+- `HERMES_AUTOPILOT_LARK_AS` — 可选发送身份，会透传为 `--as <value>`；默认不设置
 
 ### 仓库结构
 

@@ -11,6 +11,12 @@ from typing import Any, Dict, Optional
 
 from hermes_constants import get_hermes_home
 
+try:
+    from gateway.session_context import get_session_env
+except Exception:  # pragma: no cover - compatibility with older Hermes builds
+    def get_session_env(name: str, default: str = "") -> str:
+        return os.getenv(name, default)
+
 logger = logging.getLogger(__name__)
 
 ARM_RE = re.compile(r"^\s*autopilot\s+(\d+)\s*$", re.IGNORECASE)
@@ -54,17 +60,17 @@ def _clear_state(session_id: str) -> None:
 
 
 def _platform() -> str:
-    return (os.getenv("HERMES_SESSION_PLATFORM") or "").strip().lower()
+    return (get_session_env("HERMES_SESSION_PLATFORM") or "").strip().lower()
 
 
 
 def _chat_id() -> str:
-    return (os.getenv("HERMES_SESSION_CHAT_ID") or "").strip()
+    return (get_session_env("HERMES_SESSION_CHAT_ID") or "").strip()
 
 
 
 def _thread_id() -> str:
-    return (os.getenv("HERMES_SESSION_THREAD_ID") or "").strip()
+    return (get_session_env("HERMES_SESSION_THREAD_ID") or "").strip()
 
 
 
@@ -88,7 +94,7 @@ def _send_to_current_feishu_channel(text: str, chat_id: str) -> bool:
     profile = (os.getenv("HERMES_AUTOPILOT_LARK_PROFILE") or "").strip()
     if profile:
         cmd.extend(["--profile", profile])
-    sender = (os.getenv("HERMES_AUTOPILOT_LARK_AS") or "user").strip()
+    sender = (os.getenv("HERMES_AUTOPILOT_LARK_AS") or "").strip()
     if sender:
         cmd.extend(["--as", sender])
 
